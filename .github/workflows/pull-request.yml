@@ -3,7 +3,7 @@ name: Pull Request Pipeline
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [pull_request]
 jobs:
-  Explore-GitHub-Actions:
+  run-linter:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -16,7 +16,7 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: 'Yamllint'
+      - name: 'yamllint'
         uses: karancode/yamllint-github-action@master
         with:
           yamllint_strict: false
@@ -24,6 +24,8 @@ jobs:
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 'ansible-lint'
+        uses: ansible-community/ansible-lint-action@v6
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
