@@ -16,3 +16,5 @@
   template:
     src: .gitconfig.j2
     dest: "{{ lookup('env','HOME') }}/.gitconfig"
+
+- include_tasks: install_gh.yml
