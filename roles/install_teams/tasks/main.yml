@@ -1,0 +1,18 @@
+---
+- block:
+    - name: add repo
+      apt:
+        deb: https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
+      become: yes
+
+    - name: install powershell
+      apt:
+        name: powershell
+        state: present
+      become: yes
+
+    - name: install teams
+      apt:
+        deb: https://go.microsoft.com/fwlink/p/?LinkID=2112886&culture=en-us&country=WW
+      become: yes
+  when: ansible_pkg_mgr == "apt"

@@ -1,0 +1,18 @@
+---
+- name: create dev directory
+  file:
+    path: "{{ lookup('env','HOME') }}/dev/"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('env','USER') }}"
+    state: directory
+
+- name: config git gooks
+  copy:
+    src: files/gitconfig
+    dest: "{{ lookup('env','HOME') }}/dev/"
+    mode: preserve
+
+- name: create gitconfig file
+  template:
+    src: .gitconfig.j2
+    dest: "{{ lookup('env','HOME') }}/.gitconfig"

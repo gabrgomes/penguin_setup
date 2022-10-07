@@ -1,0 +1,29 @@
+---
+- name: Install konsole
+  package:
+    name: konsole
+    state: installed
+  become: yes
+
+- name: Copy icon
+  copy:
+    src: crostini-192.png
+    dest: /usr/share/icons/default/konsole.png
+  become: yes
+
+- name: Edit launcher icon
+  lineinfile:
+    path: /usr/share/applications/org.kde.konsole.desktop
+    line: 'Icon=/usr/share/icons/default/konsole.png'
+    regexp: 'Icon=.*'
+  become: yes
+
+- name: Configure konsole
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lookup('env','HOME') }}/.local/share/konsole/"
+  loop:
+    - "Breeze.colorscheme"
+    - "Profile 1.profile"
+    - "WhiteOnBlack.colorscheme"
+

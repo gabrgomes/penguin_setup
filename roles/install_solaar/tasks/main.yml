@@ -1,0 +1,27 @@
+---
+- name: Install solaar
+  package:
+    name: solaar
+    state: installed
+  become: yes
+
+# - name: Copy icon
+#   copy:
+#     src: crostini-192.png
+#     dest: /usr/share/icons/default/konsole.png
+#   become: yes
+
+# - name: Edit launcher icon
+#   lineinfile:
+#     path: /usr/share/applications/org.kde.konsole.desktop
+#     line: 'Icon=/usr/share/icons/default/konsole.png'
+#     regexp: 'Icon=.*'
+#   become: yes
+
+- name: Configure solaar
+  copy:
+    src: "{{ item }}"
+    dest: "{{ lookup('env','HOME') }}/.config/solaar/"
+  loop:
+    - "rules.yaml"
+

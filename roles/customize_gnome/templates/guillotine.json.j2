@@ -1,0 +1,42 @@
+{
+    "settings": {
+      "loglevel": "warning"
+    },
+    "menu": [
+      {
+        "type": "switch",
+        "title": "Proxy",
+        "start": "{{ lookup('env','HOME') }}/proxy.sh enable",
+        "stop": "{{ lookup('env','HOME') }}/proxy.sh disable",
+        "check": "{{ lookup('env','HOME') }}/proxy.sh check",
+        "icon": "applications-internet",
+        "killOnDisable": false
+      },
+      {
+        "type": "switch",
+        "title": "VPN",
+        "start": "gnome-terminal -- {{ lookup('env','HOME') }}/vpn.sh start",
+        "stop": "{{ lookup('env','HOME') }}/vpn.sh stop",
+        "check": "{{ lookup('env','HOME') }}/vpn.sh check",
+        "icon": "security-high",
+        "killOnDisable": false
+      },
+      {
+        "type": "submenu",
+        "title": "Guillotine",
+        "icon": "guillotine-symbolic",
+        "items": [
+          {
+            "type": "command",
+            "title": "Configuration",
+            "command": "code .config/guillotine.json",
+            "instancing": "singleInstance",
+            "icon": "preferences-other-symbolic",
+            "killOnDisable": false
+          }
+  
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,21 @@
+---
+- name: Download apache Directory Studio
+  get_url:
+    url: https://downloads.apache.org/directory/studio/2.0.0.v20200411-M15/ApacheDirectoryStudio-2.0.0.v20200411-M15-linux.gtk.x86_64.tar.gz
+    #url: http://ftp.unicamp.br/pub/apache/directory/studio/2.0.0.v20180908-M14/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz
+    dest: "{{ lookup('env','HOME') }}/tmp/"
+    timeout: 60
+
+- name: Download apache Directory Studio
+  unarchive:
+    src: "{{ lookup('env','HOME') }}/Downloads/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz"
+    dest: /opt
+    remote_src: yes
+    mode: 0775
+  become: yes
+
+- name: Create launcher icon
+  template:
+    src: ApacheDirectoryStudio.j2
+    dest: /usr/share/applications/ApacheDirectoryStudio.desktop
+  become: yes

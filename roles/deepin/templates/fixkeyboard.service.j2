@@ -1,0 +1,13 @@
+[Unit]
+Description=Fix keyboard
+After=dbus.service
+
+[Service]
+User={{ lookup('env','USER') }}
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/local/bin/fixkeyboard.sh
+
+[Install]
+WantedBy=multi-user.target

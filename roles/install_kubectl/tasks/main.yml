@@ -1,0 +1,83 @@
+- block:
+    - name: get repo key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+      become: yes
+
+    - name: add kubectl repo
+      apt_repository:
+        repo: "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+        filename: kubernetes
+        state: present
+      become: yes
+
+    - name: install kubectl
+      apt:
+        name: kubectl
+        update_cache: yes
+      become: yes
+  when: ansible_pkg_mgr == "apt" and "WSL" not in ansible_kernel
+
+- name: install kubectl
+  pacman:
+    name:
+      - kubectl
+      - fzf
+    state: present
+  when: ansible_pkg_mgr == "pacman"
+
+
+- name: create .kube dir
+  file:
+    path: "{{ lookup('env','HOME') }}/.kube/"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+    state: directory
+
+- name: copy kubectl config
+  template:
+    dest: "{{ lookup('env','HOME') }}/.kube/config"
+    src: config.j2
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+  when: create_kubeconfig | default(false)
+
+- name: create kubectx dir
+  file:
+    path: "/opt/kubectx/"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+    state: directory
+  become: yes
+
+- name: Download kubectx packages
+  git:
+    repo: git@github.com:ahmetb/kubectx.git
+    dest: /opt/kubectx
+#  become: yes
+
+- name: Create simlinks
+  file:
+    src: "/opt/kubectx/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop:
+    - kubectx
+    - kubens
+  become: yes
+
+- name: create completion dir
+  file:
+    path: "{{ lookup('env','HOME') }}/.oh-my-zsh/completions"
+    state: directory
+    mode: '0755'
+
+- name: config autocomplete
+  file:
+    src: "/opt/kubectx/completion/{{ item }}.zsh"
+    dest: "{{ lookup('env','HOME') }}/.oh-my-zsh/completions/{{ item }}"
+    state: link
+  loop:
+    - _kubectx
+    - _kubens

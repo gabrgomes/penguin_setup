@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  environment:
+    https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
+
+
+  roles:
+    - { role: prereqs, tags: prereqs }
+    - { role: config_ansible, tags: ansible }
+    - { role: install_code, tags: code }
+    - { role: install_zsh, tags: zsh }
+    - { role: install_docker, tags: docker }
+    - { role: config_dns, tags: dns }
+    - { role: install_kubectl, tags: kubectl }
+    - { role: install_pw3270, tags: pw3270 }
+    - { role: install_postman, tags: postman }
+    - { role: install_konsole, tags: konsole }
+    - { role: deepin, tags: deepin }
+    - { role: install_directorystudio, tags: directorystudio }
+    - { role: install_helm, tags: helm }
+    - { role: config_git, tags: git }
+    - { role: install_teams, tags: teams }
+    - { role: install_robo3t, tags: robo3t }
+    - { role: install_packer, tags: packer }
+    - { role: install_terraform, tags: terraform }
+    - { role: install_solaar, tags: solaar }
+    - { role: install_stern, tags: stern }

@@ -1,0 +1,34 @@
+---
+- name: Install deps
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop:
+    - libgconf-2-4
+    - libgtk2.0-0
+
+- name: Download Postman
+  unarchive:
+    src: https://dl.pstmn.io/download/latest/linux64
+    dest: /opt/
+    remote_src: yes
+    mode: 0775
+  become: yes
+  environment:
+    https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
+
+- name: Download icon
+  get_url:
+    url: https://user-images.githubusercontent.com/2676579/34940598-17cc20f0-f9be-11e7-8c6d-f0190d502d64.png
+    dest: /opt/Postman/postman.png
+    validate_certs: false
+  become: yes
+  environment:
+    https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
+
+- name: Create launcher icon
+  template:
+    src: postman.j2
+    dest: /usr/share/applications/postman.desktop
+  become: yes

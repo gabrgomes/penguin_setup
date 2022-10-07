@@ -1,0 +1,30 @@
+- name: install zsh
+  apt:
+    name: zsh
+  become: yes
+  when: ansible_distribution != "Archlinux"
+
+- name: install ohmyzsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  become: no
+  register: ohmyzsh_rc
+  failed_when: ohmyzsh_rc.rc != 0 and ohmyzsh_rc.rc != 1
+  ignore_errors: true
+
+- name: set user shell
+  user:
+    name: "{{ lookup('env','USER') }}"
+    shell: /bin/zsh
+  become: yes
+
+- name: create template files
+  template:
+    dest: "{{ lookup('env','HOME') }}/{{ item.dest }}"
+    src: "{{ item.src }}"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+  become: no
+  loop:
+    - { src: 'zshrc.j2', dest: '.zshrc' }
+    - { src: 'kubectl_aliases.j2', dest: '.kubectl_aliases' }
+    - { src: 'my_aliases.j2', dest: '.my_aliases' }

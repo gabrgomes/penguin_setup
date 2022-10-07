@@ -1,0 +1,23 @@
+- block:
+    - name: get repo key
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+      become: yes
+
+    - name: add terraform repo
+      apt_repository:
+        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bullseye main"
+        filename: terraform
+        state: present
+      become: yes
+
+    - name: install terraform
+      apt:
+        name: terraform
+        update_cache: yes
+      become: yes
+  when: ansible_pkg_mgr == "apt"
+
+- name: Enable autocomplete
+  shell: terraform -install-autocomplete

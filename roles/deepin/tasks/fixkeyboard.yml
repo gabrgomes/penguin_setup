@@ -1,0 +1,45 @@
+---
+- name: Get current keyboart layout
+  shell: setxkbmap -query | grep layout | awk 'NF>1{print $NF}'
+  register: kb_layout
+
+- name: Get current keyboart variant
+  shell: setxkbmap -query | grep variant | awk 'NF>1{print $NF}'
+  register: kb_variant
+
+
+- name: Create fixkeyboard script
+  template:
+    dest: /usr/local/bin/fixkeyboard.sh
+    src: fixkeyboard.sh
+    mode: 0755
+  become: yes
+
+- name: Create fixkeyboard.desktop
+  template:
+    dest: /usr/share/applications/fixkeyboard.desktop
+    src: fixkeyboard.desktop.j2
+    mode: 0755
+  become: yes
+
+- name: Autostart fixkeyboard
+  template:
+    dest: "{{ lookup('env','HOME') }}/.config/autostart/fixkeyboard.desktop"
+    src: fixkeyboard.desktop.j2
+    mode: 0755
+  become: no
+
+# - name: create fixkeyboard.service
+#   template:
+#       dest: /etc/systemd/system/fixkeyboard.service
+#       src: fixkeyboard.service.j2
+#       mode: 0755
+#   become: yes
+
+# - name: enable fixkeyboard.service
+#   systemd:
+#       name: fixkeyboard.service
+#       daemon_reload: yes
+#       enabled: yes
+#   become: yes
+

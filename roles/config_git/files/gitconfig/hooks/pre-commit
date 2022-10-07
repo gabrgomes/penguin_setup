@@ -1,0 +1,36 @@
+#!/bin/bash
+EXIT_CODE_ABORT=1
+LINT_FAILURE=0
+# Get the list of files that this commit touches
+FILES=$(git diff --name-only --staged)
+
+for FILE in ${FILES}; do
+    # It's no good linting files that have been deleted! Check if
+    # the file exists
+    stat "${FILE}" 2>&1 > /dev/null
+    
+    # If the file does not exist, then skip it. It's been deleted
+    if [[ $? != 0 ]]; then
+        echo "Cant' stat file. Skipping!"
+    else
+		if [[ "${FILE##*.}" =~ ^(yml|yaml)$ ]]; then
+				yamllint "${FILE}"
+
+				if [[ $? != 0 ]]; then
+				LINT_FAILURE=1
+				fi
+		fi
+		if [[ "${FILE##*.}" =~ ^(py)$ ]]; then
+				flake8 "${FILE}"
+
+				if [[ $? != 0 ]]; then
+				LINT_FAILURE=1
+				fi
+		fi
+    fi
+done
+# If any of the files failed linting, then terminate. We do not
+# want to commit bad files! 
+if [[ ${LINT_FAILURE} == 1 ]]; then
+  exit ${EXIT_CODE_ABORT}
+fi

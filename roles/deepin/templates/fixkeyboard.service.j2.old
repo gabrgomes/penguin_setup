@@ -1,0 +1,13 @@
+[Unit]
+Description=Fix keyboard
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+User={{ lookup('env','USER') }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStop=/bin/sh -c 'DISPLAY=:0.0 ; export DISPLAY ; setxkbmap -layout us -variant intl'
+
+[Install]
+WantedBy=sleep.target

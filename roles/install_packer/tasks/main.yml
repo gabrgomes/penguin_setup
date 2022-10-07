@@ -1,0 +1,19 @@
+---
+- name: get repo key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+  become: yes
+
+- name: add packer repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    filename: kubernetes
+    state: present
+  become: yes
+
+- name: install packer
+  apt:
+    name: packer
+    update_cache: yes
+  become: yes

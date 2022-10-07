@@ -1,0 +1,34 @@
+# GIT
+alias last-tag="git tag | sort -V | tail"
+
+rm-tag () {
+	git tag -d $1
+	git push --delete origin $1
+}
+
+newtag () {
+        echo "Last tags:"
+        git tag | sort -V | tail
+        echo "\nNew tag:"
+        read nt
+        git tag -a $nt -m $nt
+        git push origin $nt
+}
+
+git-open () {
+{% if 'WSL' in ansible_kernel %}
+	wslview `git remote -v | grep fetch | awk '{print $2}' | sed -e 's/\:/\//' | sed 's/git@/http\:\/\//' | head -1`
+{% else %}
+	python -m webbrowser `git remote -v | grep fetch | awk '{print $2}' | sed -e 's/\:/\//' | sed 's/git@/http\:\/\//' | head -1`
+{% endif %}
+}
+
+# OTHER
+track () {
+        while sleep 2; do
+                date
+                $@
+                echo '\n'
+        done
+}
+

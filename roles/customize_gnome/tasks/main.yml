@@ -1,0 +1,16 @@
+---
+- name: Install gnome extensions
+  include_role:
+    name: jaredhocutt.gnome_extensions
+    vars:
+      gnome_extension_ids:
+        - 779
+        - 1319
+        - 5090
+        - 1765
+        - 3981
+
+- name: Customize Guillotine
+  template:
+    src: guillotine.json.j2
+    dest: "{{ lookup('env','HOME') }}/.config/guillotine.json"
