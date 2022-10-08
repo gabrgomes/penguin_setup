@@ -14,7 +14,7 @@
     - { role: config_dns, tags: dns }
     - { role: install_kubectl, tags: kubectl }
     - { role: install_postman, tags: postman }
-    - { role: install_konsole, tags: konsole }
+    - { role: install_konsole, tags: [konsole, never] }
     - { role: deepin, tags: deepin }
     - { role: install_directorystudio, tags: directorystudio }
     - { role: install_helm, tags: helm }
