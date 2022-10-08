@@ -3,7 +3,6 @@ name: Functional Test
 run-name: Functional Test 🚀
 on:
   - push
-  - pull_request
 jobs:
   run-functional-test:
     runs-on: ubuntu-latest
