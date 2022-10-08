@@ -53,7 +53,7 @@
 
 - name: Download kubectx packages
   ansible.builtin.git:
-    repo: git@github.com:ahmetb/kubectx.git
+    repo: https://github.com/ahmetb/kubectx
     dest: /opt/kubectx
 #  become: yes
 
