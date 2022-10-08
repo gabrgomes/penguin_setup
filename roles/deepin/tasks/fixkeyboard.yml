@@ -1,10 +1,10 @@
 ---
 - name: Get current keyboart layout
-  ansible.builtin.shell: set -o pipefail && setxkbmap -query | grep layout | awk 'NF>1{print $NF}'
+  ansible.builtin.shell: setxkbmap -query | grep layout | awk 'NF>1{print $NF}'
   register: kb_layout
 
 - name: Get current keyboart variant
-  ansible.builtin.shell: set -o pipefail && setxkbmap -query | grep variant | awk 'NF>1{print $NF}'
+  ansible.builtin.shell: setxkbmap -query | grep variant | awk 'NF>1{print $NF}'
   register: kb_variant
 
 
