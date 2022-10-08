@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/dev/"
     owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('pipe', 'id -n -g') }}"
     state: directory
 
 - name: Config git gooks
