@@ -4,7 +4,7 @@ run-name: Linter 🔎
 on: [pull_request]
 jobs:
   run-linter:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -16,9 +16,6 @@ jobs:
           ls -la ${{ github.workspace }}
           echo "#.ansible-lint
           cat .ansible-lint
-          echo "\n#.config/ansible-lint
-          cat .config/ansible-lint
-
 
       - name: 'yamllint'
         uses: karancode/yamllint-github-action@master
