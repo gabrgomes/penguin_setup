@@ -31,5 +31,5 @@ jobs:
         run: |
           echo "Trigger event: ${{ github.event_name }}"
           echo "User: ${{ github.actor }}"
-          echo "Status: ${{ job.status }}."
+          echo "Status: ${{ job.status }}"
 
