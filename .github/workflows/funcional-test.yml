@@ -38,6 +38,7 @@ jobs:
           #   --verbose
 
       - name: Summary
+        if: always()
         run: |
           echo "Trigger event: ${{ github.event_name }}"
           echo "User: ${{ github.actor }}"

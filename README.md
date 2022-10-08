@@ -1,5 +1,5 @@
 # penguin_setup
-[Static Analysis](https://github.com/gabrgomes/penguin_setup/actions/workflows/pull-request.yml/badge.svg) [Functional Test](https://github.com/gabrgomes/penguin_setup/actions/workflows/funcional-test.yml/badge.svg)
+![Static Analysis](https://github.com/gabrgomes/penguin_setup/actions/workflows/pull-request.yml/badge.svg) ![Functional Test](https://github.com/gabrgomes/penguin_setup/actions/workflows/funcional-test.yml/badge.svg)
 
 This is a personal repo I use to install and configure may main work tools. It's not intended to be distributed, so don' expect everything to work, there is always something broken. 
 
