@@ -1,28 +1,28 @@
-- name: install code
-  apt:
+- name: Install code
+  ansible.builtin.apt:
     deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
   become: yes
   when: ansible_pkg_mgr == "apt"
 
-- name: fix display scaling
-  template:
+- name: Fix display scaling
+  ansible.builtin.template:
     src: code.desktop.j2
     dest: /usr/share/applications/code.desktop
   become: yes
   when: ansible_product_name == "crosvm"
 
-- name: install code extensions
-  shell: "code --install-extension {{ item }}"
-  become: no
-  loop:
-    # - ms-azuretools.vscode-docker
-    - pkief.material-icon-theme
-    # - vscoss.vscode-ansible
-    # - ms-kubernetes-tools.vscode-kubernetes-tools
-    - ms-python.python
-    - redhat.vscode-yaml
-    - samuelcolvin.jinjahtml
-    - shd101wyy.markdown-preview-enhanced
-    - mrmlnc.vscode-duplicate
-    - zbr.vscode-ansible
-    - eamodio.gitlens
+# - name: Install code extensions
+#   ansible.builtin.shell: "code --install-extension {{ item }}"
+#   become: no
+#   loop:
+#     - ms-azuretools.vscode-docker
+#     - pkief.material-icon-theme
+#     - vscoss.vscode-ansible
+#     - ms-kubernetes-tools.vscode-kubernetes-tools
+#     - ms-python.python
+#     - redhat.vscode-yaml
+#     - samuelcolvin.jinjahtml
+#     - shd101wyy.markdown-preview-enhanced
+#     - mrmlnc.vscode-duplicate
+#     - zbr.vscode-ansible
+#     - eamodio.gitlens

@@ -1,6 +1,6 @@
 ---
 - name: Install deps
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   become: yes
@@ -9,7 +9,7 @@
     - libgtk2.0-0
 
 - name: Download Postman
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://dl.pstmn.io/download/latest/linux64
     dest: /opt/
     remote_src: yes
@@ -19,7 +19,7 @@
     https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
 
 - name: Download icon
-  get_url:
+  ansible.builtin.get_url:
     url: https://user-images.githubusercontent.com/2676579/34940598-17cc20f0-f9be-11e7-8c6d-f0190d502d64.png
     dest: /opt/Postman/postman.png
     validate_certs: false
@@ -28,7 +28,7 @@
     https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
 
 - name: Create launcher icon
-  template:
+  ansible.builtin.template:
     src: postman.j2
     dest: /usr/share/applications/postman.desktop
   become: yes

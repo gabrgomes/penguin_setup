@@ -1,30 +1,30 @@
 ---
 - name: Get current keyboart layout
-  shell: setxkbmap -query | grep layout | awk 'NF>1{print $NF}'
+  ansible.builtin.shell: set -o pipefail && setxkbmap -query | grep layout | awk 'NF>1{print $NF}'
   register: kb_layout
 
 - name: Get current keyboart variant
-  shell: setxkbmap -query | grep variant | awk 'NF>1{print $NF}'
+  ansible.builtin.shell: set -o pipefail && setxkbmap -query | grep variant | awk 'NF>1{print $NF}'
   register: kb_variant
 
 
 - name: Create fixkeyboard script
-  template:
+  ansible.builtin.template:
     dest: /usr/local/bin/fixkeyboard.sh
     src: fixkeyboard.sh
     mode: 0755
   become: yes
 
 - name: Create fixkeyboard.desktop
-  template:
+  ansible.builtin.template:
     dest: /usr/share/applications/fixkeyboard.desktop
     src: fixkeyboard.desktop.j2
     mode: 0755
   become: yes
 
 - name: Autostart fixkeyboard
-  template:
-    dest: "{{ lookup('env','HOME') }}/.config/autostart/fixkeyboard.desktop"
+  ansible.builtin.template:
+    dest: "{{ lookup('env', 'HOME') }}/.config/autostart/fixkeyboard.desktop"
     src: fixkeyboard.desktop.j2
     mode: 0755
   become: no
