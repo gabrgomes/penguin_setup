@@ -1,4 +1,5 @@
-- when: ansible_pkg_mgr == "apt" and "WSL" not in ansible_kernel
+- name: Install kubctl
+  when: ansible_pkg_mgr == "apt" and "WSL" not in ansible_kernel
   block:
     - name: Get repo key
       ansible.builtin.apt_key:
@@ -29,7 +30,6 @@
     state: present
   when: ansible_pkg_mgr == "pacman"
 
-
 - name: Create .kube dir
   ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/.kube/"
@@ -45,41 +45,7 @@
     group: "{{ lookup('pipe', 'id -n -g') }}"
   when: create_kubeconfig | default(false)
 
-- name: Create kubectx dir
-  ansible.builtin.file:
-    path: "/opt/kubectx/"
-    owner: "{{ user }}"
-    group: "{{ lookup('pipe', 'id -n -g') }}"
-    state: directory
-  become: yes
-
-- name: Download kubectx packages
-  ansible.builtin.git:
-    repo: https://github.com/ahmetb/kubectx
-    dest: /opt/kubectx
-#  become: yes
-
-- name: Create simlinks
-  ansible.builtin.file:
-    src: "/opt/kubectx/{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
-    state: link
+- ansible.builtin.include_tasks: "{{ item }}"
   loop:
-    - kubectx
-    - kubens
-  become: yes
-
-- name: Create completion dir
-  ansible.builtin.file:
-    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/completions"
-    state: directory
-    mode: '0755'
-
-- name: Config autocomplete
-  ansible.builtin.file:
-    src: "/opt/kubectx/completion/{{ item }}.zsh"
-    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/completions/{{ item }}"
-    state: link
-  loop:
-    - _kubectx
-    - _kubens
+    - kubectx.yml
+    - stern.yml
