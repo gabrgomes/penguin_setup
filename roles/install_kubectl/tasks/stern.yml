@@ -1,0 +1,43 @@
+---
+- ansible.builtin.set_fact:
+    stern_dir: /opt/stern
+
+- name: Create dir
+  ansible.builtin.file:
+    path: "{{ stern_dir }}"
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Check local file
+  ansible.builtin.stat:
+    path: "roles/install_stern/files/stern_linux_amd64"
+  register: local_file
+
+- when: local_file.stat.exists
+  ansible.builtin.copy:
+    src: stern_linux_amd64
+    dest: "{{ stern_dir }}/stern"
+    mode: '0755'
+  become: yes
+
+- name: Download stern binary
+  when: not local_file.stat.exists
+  ansible.builtin.get_url:
+    url: https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
+    dest: "{{ stern_dir }}/stern"
+  become: yes
+
+- name: Change permissions
+  ansible.builtin.file:
+    path: "{{ stern_dir }}/stern"
+    state: file
+    mode: 0755
+  become: yes
+
+- name: Create simlinks
+  ansible.builtin.file:
+    src: "{{ stern_dir }}/stern"
+    dest: "/usr/local/bin/stern"
+    state: link
+  become: yes
