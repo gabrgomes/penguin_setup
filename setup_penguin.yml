@@ -19,7 +19,7 @@
     - { role: config_git, tags: [git, dev] }
     - { role: install_code, tags: [code, dev] }
     - { role: install_postman, tags: [postman, dev] }
-    - { role: install_directorystudio, tags: [directorystudio, dev] }
+    - { role: install_directorystudio, tags: [ldap, dev] }
     - { role: install_robo3t, tags: [robo3t, dev] }
 
     # Container
@@ -33,4 +33,4 @@
     - { role: install_terraform, tags: [terraform, iac] }
 
     # Communication
-    - { role: install_teams, tags: [teams, communications] }
+    - { role: install_teams, tags: [teams, collab] }
