@@ -1,0 +1,44 @@
+---
+name: Functional Test
+run-name: Functional Test 🚀
+on:
+  - push
+  - pull_request
+jobs:
+  run-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: setup_penguin.yml
+          # directory: ./
+          # # Optional, SSH private key
+          # key: ${{secrets.SSH_PRIVATE_KEY}}
+          # # Optional, literal inventory file contents
+          # inventory: |
+          #   [all]
+          #   localhost
+          # requirements: galaxy-requirements.yml
+          # # Optional, additional flags to pass to ansible-playbook
+          # options: |
+          #   --inventory .hosts
+          #   --limit group1
+          #   --extra-vars hello=there
+          #   --verbose
+
+      - name: Summary
+        run: |
+          echo "Trigger event: ${{ github.event_name }}"
+          echo "User: ${{ github.actor }}"
+          echo "Status: ${{ job.status }}."
