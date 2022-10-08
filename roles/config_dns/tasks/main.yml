@@ -3,5 +3,5 @@
   ansible.builtin.lineinfile:
       path: /etc/dhcp/dhclient.conf
       regexp: "^prepend domain-name-servers"
-      line: "prepend domain-name-servers {{ dns_servers | default(8.8.8.8) }};"
+      line: "prepend domain-name-servers {{ dns_servers | default('8.8.8.8') }};"
   become: yes

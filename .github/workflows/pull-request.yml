@@ -1,6 +1,6 @@
 ---
 name: Static Analisys
-run-name: Linter 🚀
+run-name: Linter 🔎
 on: [pull_request]
 jobs:
   run-linter:
