@@ -11,3 +11,4 @@ warn_list:
   - meta-no-info
   - latest[git]
   - risky-shell-pipe
+  - ignore-errors
