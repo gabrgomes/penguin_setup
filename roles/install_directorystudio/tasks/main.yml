@@ -3,12 +3,12 @@
   ansible.builtin.get_url:
     url: https://downloads.apache.org/directory/studio/2.0.0.v20210717-M17/ApacheDirectoryStudio-2.0.0.v20210717-M17-linux.gtk.x86_64.tar.gz
     #url: http://ftp.unicamp.br/pub/apache/directory/studio/2.0.0.v20180908-M14/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz
-    dest: "{{ lookup('env', 'HOME') }}/tmp/"
+    dest: "{{ lookup('env', 'HOME') }}/directorystudio.tar.gz"
     timeout: 60
 
 - name: Download apache Directory Studio
   ansible.builtin.unarchive:
-    src: "{{ lookup('env', 'HOME') }}/Downloads/ApacheDirectoryStudio-2.0.0.v20180908-M14-linux.gtk.x86_64.tar.gz"
+    src: "{{ lookup('env', 'HOME') }}/directorystudio.tar.gz"
     dest: /opt
     remote_src: yes
     mode: 0775
