@@ -1,11 +1,11 @@
 - name: Config repos
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://deb.debian.org/debian stretch-backports main
     state: present
   become: yes
 
-- name: install deps
-  apt:
+- name: Install deps
+  ansible.builtin.apt:
     name: "{{ item }}"
     cache_valid_time: 600
   loop:

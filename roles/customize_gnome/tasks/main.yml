@@ -1,6 +1,6 @@
 ---
 - name: Install gnome extensions
-  include_role:
+  ansible.builtin.include_role:
     name: jaredhocutt.gnome_extensions
     vars:
       gnome_extension_ids:
@@ -11,6 +11,6 @@
         - 3981
 
 - name: Customize Guillotine
-  template:
+  ansible.builtin.template:
     src: guillotine.json.j2
-    dest: "{{ lookup('env','HOME') }}/.config/guillotine.json"
+    dest: "{{ lookup('env', 'HOME') }}/.config/guillotine.json"

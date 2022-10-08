@@ -1,23 +1,23 @@
-- block:
-    - name: get repo key
-      apt_key:
+- when: ansible_pkg_mgr == "apt"
+  block:
+    - name: Get repo key
+      ansible.builtin.apt_key:
         url: https://apt.releases.hashicorp.com/gpg
         state: present
       become: yes
 
-    - name: add terraform repo
-      apt_repository:
+    - name: Add terraform repo
+      ansible.builtin.apt_repository:
         repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bullseye main"
         filename: terraform
         state: present
       become: yes
 
-    - name: install terraform
-      apt:
+    - name: Install terraform
+      ansible.builtin.apt:
         name: terraform
         update_cache: yes
       become: yes
-  when: ansible_pkg_mgr == "apt"
 
 - name: Enable autocomplete
-  shell: terraform -install-autocomplete
+  ansible.builtin.command: terraform -install-autocomplete

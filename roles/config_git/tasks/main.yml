@@ -1,18 +1,21 @@
 ---
-- name: create dev directory
-  file:
-    path: "{{ lookup('env','HOME') }}/dev/"
-    owner: "{{ lookup('env','USER') }}"
-    group: "{{ lookup('env','USER') }}"
+- name: Create dev directory
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/dev/"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
     state: directory
 
-- name: config git gooks
-  copy:
+- name: Config git gooks
+  ansible.builtin.copy:
     src: files/gitconfig
-    dest: "{{ lookup('env','HOME') }}/dev/"
+    dest: "{{ lookup('env', 'HOME') }}/dev/"
     mode: preserve
 
-- name: create gitconfig file
-  template:
+- name: Create gitconfig file
+  ansible.builtin.template:
     src: .gitconfig.j2
-    dest: "{{ lookup('env','HOME') }}/.gitconfig"
+    dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
+
+- name: Install gh
+  ansible.builtin.include_tasks: install_gh.yml

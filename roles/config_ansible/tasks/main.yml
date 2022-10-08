@@ -1,20 +1,18 @@
 ---
-- name: install ansible utils
-  package:
-    name: "{{ item }}"
-    cache_valid_time: 600
-  loop:
-    - ansible-lint
-    - yamllint
+- name: Install ansible utils
+  ansible.builtin.pip:
+    name:
+      - ansible-lint
+      - yamllint
   become: yes
 
-- name: config ansible.cfg
-  template:
-    dest: "{{ lookup('env','HOME') }}/.ansible.cfg"
+- name: Config ansible.cfg
+  ansible.builtin.template:
+    dest: "{{ lookup('env', 'HOME') }}/.ansible.cfg"
     src: ansible.cfg.j2
   become: yes
 
-- name: config vimrc
-  template:
-    dest: "{{ lookup('env','HOME') }}/.vimrc"
+- name: Config vimrc
+  ansible.builtin.template:
+    dest: "{{ lookup('env', 'HOME') }}/.vimrc"
     src: vimrc.j2

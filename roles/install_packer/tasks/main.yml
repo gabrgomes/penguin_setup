@@ -1,19 +1,19 @@
 ---
-- name: get repo key
-  apt_key:
+- name: Get repo key
+  ansible.builtin.apt_key:
     url: https://apt.releases.hashicorp.com/gpg
     state: present
   become: yes
 
-- name: add packer repo
-  apt_repository:
+- name: Add packer repo
+  ansible.builtin.apt_repository:
     repo: "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
     filename: kubernetes
     state: present
   become: yes
 
-- name: install packer
-  apt:
+- name: Install packer
+  ansible.builtin.apt:
     name: packer
     update_cache: yes
   become: yes

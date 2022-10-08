@@ -1,0 +1,12 @@
+---
+exclude_paths:
+  - .cache/ # implicit unless exclude_paths is defined in config
+  - .github/
+  - roles/install_solaar/files/rules.yaml
+
+warn_list:
+  - no-changed-when
+  - risky-file-permissions
+  - name[missing]
+  - meta-no-info
+  - latest[git]

@@ -1,6 +1,6 @@
 ---
 - name: Install solaar
-  package:
+  ansible.builtin.package:
     name: solaar
     state: installed
   become: yes
@@ -19,9 +19,9 @@
 #   become: yes
 
 - name: Configure solaar
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ lookup('env','HOME') }}/.config/solaar/"
+    dest: "{{ lookup('env', 'HOME') }}/.config/solaar/"
   loop:
     - "rules.yaml"
 

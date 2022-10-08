@@ -1,10 +1,12 @@
 ---
-- set_fact:
+- ansible.builtin.set_fact:
     robo3t_url: https://github.com/Studio3T/robomongo/releases/download/v1.4.4/robo3t-1.4.4-linux-x86_64-e6ac9ec.tar.gz
-- set_fact:
-    robo3t_path: "{{ robo3t_url | urlsplit('path') | basename | splitext | first | splitext| first }}"
+
+- ansible.builtin.set_fact:
+    robo3t_path: "{{ robo3t_url | urlsplit('path') | basename | splitext | first | splitext | first }}"
+
 - name: Download robo3t
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ robo3t_url }}"
     dest: /opt/
     remote_src: yes
@@ -12,13 +14,13 @@
   become: yes
 
 - name: Download icon
-  get_url:
+  ansible.builtin.get_url:
     url: https://www.robomongo.org/static/robomongo-128x128-129df2f1.png
     dest: "/opt/{{ robo3t_path }}/robo3t.png"
   become: yes
 
 - name: Create launcher icon
-  template:
+  ansible.builtin.template:
     src: robo3t.j2
     dest: /usr/share/applications/robo3t.desktop
   become: yes
