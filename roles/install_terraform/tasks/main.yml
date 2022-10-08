@@ -8,8 +8,8 @@
 
     - name: Add terraform repo
       ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com bullseye main"
-        filename: terraform
+        repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+        filename: hashicorp
         state: present
       become: yes
 
@@ -20,4 +20,4 @@
       become: yes
 
 - name: Enable autocomplete
-  ansible.builtin.command: terraform -install-autocomplete
+  ansible.builtin.command: /usr/bin/zsh -c 'terraform -install-autocomplete'

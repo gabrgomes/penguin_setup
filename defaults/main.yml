@@ -1,1 +1,2 @@
 pixelbook: false
+user: "{{ lookup('env', 'USER') | default(ansible_user_id, true) }}"

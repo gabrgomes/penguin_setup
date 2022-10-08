@@ -10,3 +10,5 @@ warn_list:
   - name[missing]
   - meta-no-info
   - latest[git]
+  - risky-shell-pipe
+  - ignore-errors

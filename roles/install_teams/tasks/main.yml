@@ -4,12 +4,15 @@
     - name: Add repo
       ansible.builtin.apt:
         deb: https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb
+        state: present
       become: yes
+      ignore_errors: true
 
     - name: Install powershell
       ansible.builtin.apt:
         name: powershell
         state: present
+        update_cache: yes
       become: yes
 
     - name: Install teams

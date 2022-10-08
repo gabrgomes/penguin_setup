@@ -22,7 +22,7 @@
 
 - name: Add user to group
   ansible.builtin.user:
-    name: "{{ lookup('env', 'USER') }}"
+    name: "{{ user }}"
     groups: docker
     append: yes
   become: yes
@@ -68,7 +68,7 @@
     name: docker
     state: restarted
   become: yes
-  when: '"WSL" not in ansible_kernel'
+  when: ansible_service_mgr | default("") == "systemd"
 
 - name: Install dive
   ansible.builtin.apt:

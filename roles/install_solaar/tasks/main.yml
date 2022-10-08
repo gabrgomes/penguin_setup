@@ -2,7 +2,7 @@
 - name: Install solaar
   ansible.builtin.package:
     name: solaar
-    state: installed
+    state: present
   become: yes
 
 # - name: Copy icon

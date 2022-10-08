@@ -3,25 +3,34 @@
   gather_facts: yes
   environment:
     https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
-
+  vars_files:
+    - defaults/main.yml
 
   roles:
-    - { role: prereqs, tags: prereqs }
-    - { role: config_ansible, tags: ansible }
-    - { role: install_code, tags: code }
-    - { role: install_zsh, tags: zsh }
-    - { role: install_docker, tags: docker }
+    #  General
+    - { role: debian, tags: debian }
     - { role: config_dns, tags: dns }
-    - { role: install_kubectl, tags: kubectl }
-    - { role: install_postman, tags: postman }
-    - { role: install_konsole, tags: konsole }
+    - { role: install_konsole, tags: [konsole, never] }
     - { role: deepin, tags: deepin }
-    - { role: install_directorystudio, tags: directorystudio }
-    - { role: install_helm, tags: helm }
-    - { role: config_git, tags: git }
-    - { role: install_teams, tags: teams }
-    - { role: install_robo3t, tags: robo3t }
-    - { role: install_packer, tags: packer }
-    - { role: install_terraform, tags: terraform }
     - { role: install_solaar, tags: solaar }
-    - { role: install_stern, tags: stern }
+
+    # Development
+    - { role: install_zsh, tags: [zsh, dev] }
+    - { role: config_git, tags: [git, dev] }
+    - { role: install_code, tags: [code, dev] }
+    - { role: install_postman, tags: [postman, dev] }
+    - { role: install_directorystudio, tags: [directorystudio, dev] }
+    - { role: install_robo3t, tags: [robo3t, dev] }
+
+    # Container
+    - { role: install_docker, tags: [docker, container] }
+    - { role: install_kubectl, tags: [kubectl, container] }
+    - { role: install_helm, tags: [helm, container] }
+
+    # IaC
+    - { role: config_ansible, tags: [ansible, iac] }
+    - { role: install_packer, tags: [packer, iac] }
+    - { role: install_terraform, tags: [terraform, iac] }
+
+    # Communication
+    - { role: install_teams, tags: [teams, communications] }

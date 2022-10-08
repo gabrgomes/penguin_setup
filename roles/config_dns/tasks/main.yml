@@ -1,7 +1,13 @@
 ---
+- name: Check if file exists
+  ansible.builtin.stat:
+    path: /etc/dhcp/dhclient.conf
+  register: stat
+
 - name: Add dns servers
   ansible.builtin.lineinfile:
-      path: /etc/dhcp/dhclient.conf
-      regexp: "^prepend domain-name-servers"
-      line: "prepend domain-name-servers {{ dns_servers | default(8.8.8.8) }};"
+    path: /etc/dhcp/dhclient.conf
+    regexp: "^prepend domain-name-servers"
+    line: "prepend domain-name-servers {{ dns_servers | default('8.8.8.8') }};"
   become: yes
+  when: stat.stat.exists
