@@ -5,7 +5,7 @@ on:
   - push
   - pull_request
 jobs:
-  run-linter:
+  run-functional-test:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
