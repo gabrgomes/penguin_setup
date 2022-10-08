@@ -17,4 +17,5 @@
         - gnupg2
         - software-properties-common
         - python3-pip
+        - git
       become: yes

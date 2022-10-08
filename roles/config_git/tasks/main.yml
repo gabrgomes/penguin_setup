@@ -2,7 +2,7 @@
 - name: Create dev directory
   ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/dev/"
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user }}"
     group: "{{ lookup('pipe', 'id -n -g') }}"
     state: directory
 

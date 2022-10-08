@@ -3,7 +3,8 @@
   gather_facts: yes
   environment:
     https_proxy: "{{ lookup('env', 'HTTPS_PROXY') }}"
-
+  vars_files:
+    - defaults/main.yml
 
   roles:
     - { role: prereqs, tags: prereqs }

@@ -13,7 +13,7 @@
 
 - name: Set user shell
   ansible.builtin.user:
-    name: "{{ lookup('env', 'USER') }}"
+    name: "{{ user }}"
     shell: /bin/zsh
   become: yes
 
@@ -21,7 +21,7 @@
   ansible.builtin.template:
     dest: "{{ lookup('env', 'HOME') }}/{{ item.dest }}"
     src: "{{ item.src }}"
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user }}"
     group: "{{ lookup('pipe', 'id -n -g') }}"
   become: no
   loop:

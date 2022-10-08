@@ -10,6 +10,7 @@
       ansible.builtin.apt:
         name: powershell
         state: present
+        update_cache: yes
       become: yes
 
     - name: Install teams

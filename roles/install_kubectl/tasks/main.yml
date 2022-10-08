@@ -15,7 +15,9 @@
 
     - name: Install kubectl
       ansible.builtin.apt:
-        name: kubectl
+        name:
+          - kubectl
+          - git
         update_cache: yes
       become: yes
 
@@ -31,7 +33,7 @@
 - name: Create .kube dir
   ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/.kube/"
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user }}"
     group: "{{ lookup('pipe', 'id -n -g') }}"
     state: directory
 
@@ -39,14 +41,14 @@
   ansible.builtin.template:
     dest: "{{ lookup('env', 'HOME') }}/.kube/config"
     src: config.j2
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user }}"
     group: "{{ lookup('pipe', 'id -n -g') }}"
   when: create_kubeconfig | default(false)
 
 - name: Create kubectx dir
   ansible.builtin.file:
     path: "/opt/kubectx/"
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user }}"
     group: "{{ lookup('pipe', 'id -n -g') }}"
     state: directory
   become: yes
