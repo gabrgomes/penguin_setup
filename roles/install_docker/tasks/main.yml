@@ -7,17 +7,20 @@
 
 - name: Add docker repo
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
     state: present
     filename: docker
   become: yes
 
-- name: Install docker
+- name: Install docker components
   ansible.builtin.apt:
     name: "{{ item }}"
     update_cache: yes
   loop:
     - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin
   become: yes
 
 - name: Add user to group
