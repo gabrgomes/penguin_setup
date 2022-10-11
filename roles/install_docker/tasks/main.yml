@@ -1,13 +1,13 @@
+---
 - name: Get repo key
-  #shell: curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
   ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/debian/gpg
+    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
     state: present
   become: yes
 
 - name: Add docker repo
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
     state: present
     filename: docker
   become: yes
@@ -52,20 +52,6 @@
     mode: '0755'
   become: yes
 
-
-# - name: Install docker-compose
-#   get_url:
-#     url: "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
-#     dest: /usr/local/bin/docker-compose
-#     mode: '0755'
-#     validate_certs: false
-#   become: yes
-
-#- name: Install docker-compose
-#  shell:
-#    cmd: 'wget https://github.com/docker/compose/releases/download/1.25.4/docker-compose-Linux-x86_64 --no-check-certificate'
-#    chdir: /usr/local/bin/
-
 - name: Restart docker service
   ansible.builtin.systemd:
     name: docker
@@ -78,4 +64,3 @@
     deb: https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
     state: present
   become: yes
-
