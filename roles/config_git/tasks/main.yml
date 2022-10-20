@@ -12,10 +12,17 @@
     dest: "{{ lookup('env', 'HOME') }}/dev/"
     mode: preserve
 
-- name: Create gitconfig file
-  ansible.builtin.template:
-    src: .gitconfig.j2
-    dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
+- name: Config git
+  community.general.ini_file:
+    path: "{{ lookup('env', 'HOME') }}/.gitconfig"
+    section: user
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    owner: "{{ user }}"
+    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+  loop:
+    - { section: "core", option: "hooksPath", value: "{{ lookup('env','HOME') }}/dev/gitconfig/hooks" }
+    - { section: "push", option: "autoSetupRemote", value: "true" }
 
 - name: Install gh
   ansible.builtin.include_tasks: install_gh.yml
