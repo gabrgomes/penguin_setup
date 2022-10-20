@@ -19,7 +19,7 @@
     option: "{{ item.option }}"
     value: "{{ item.value }}"
     owner: "{{ user }}"
-    group: "{{ lookup('pipe', 'id -n -g' ) }}"
+    group: "{{ lookup('pipe', 'id -n -g') }}"
   loop:
     - { section: "core", option: "hooksPath", value: "{{ lookup('env', 'HOME') }}/dev/gitconfig/hooks" }
     - { section: "push", option: "autoSetupRemote", value: "true" }
