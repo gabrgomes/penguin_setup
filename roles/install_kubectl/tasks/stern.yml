@@ -23,9 +23,9 @@
 
 - name: Download stern binary
   when: not local_file.stat.exists
-  ansible.builtin.get_url:
-    url: https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
-    dest: "{{ stern_dir }}/stern"
+  ansible.builtin.unarchive:
+    src: https://github.com/stern/stern/releases/download/v1.22.0/stern_1.22.0_linux_amd64.tar.gz
+    dest: "{{ stern_dir }}"
   become: yes
 
 - name: Change permissions
